@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     fclose(InputFile2);
     
     FILE *OutputFile = OpenFiles(OutputFilename, "a");
-   //process_problems(InputFile2, OutputFile, table_words, array);
+   process_problems(InputFile2, OutputFile, table_words, array);
 
     free_everything(array, table_words, OutputFilename);
 
