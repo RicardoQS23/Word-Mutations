@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     while(fscanf(InputFile2, "%s %s %d", init, end, &mut_numb) == 3){
         size = strlen(init)-1;
 
-        //printf("Dimensao das palavras para o problema #%d e mutaçoes maximas = %d\n", size, mut_numb);
+        printf("Dimensao das palavras para o problema #%d e mutaçoes maximas = %d\n", size, mut_numb);
         count+=1;
     }
     fclose(InputFile2);
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
    //FILE *OutputFile = OpenFiles(OutputFilename, "a");
    //process_problems(InputFile2, OutputFile, table_words, array);
 
-    //free_everything(array, table_words, OutputFilename);
+    free_everything(array, table_words, OutputFilename);
 
 
   return 0;

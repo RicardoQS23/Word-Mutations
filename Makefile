@@ -20,14 +20,16 @@ files.o: files.c files.h
 table.o: table.c table.h files.h
 
 
-FILES = $(shell ls ../test/*.dict)
-FILES = $(shell ls ../test/*.pals)
+FILES = $(shell ls ../AED-Projeto/*.dict)
+FILES = $(shell ls ../AED-Projeto/*.pals)
 
 
 VALG = valgrind --leak-check=full
+clean:
+	rm -rf *.o
 
 t:
-	for F in ${FILES}; do  ./wrdmttns $${F} ; done;
+	for F in ${FILES}; do  ./wrdmttns $${F}; done;
 
 tv:
-	for F in ${FILES}; do  $(VALG) ./wrdmttns $${F} ; done;
+	for F in ${FILES}; do  $(VALG) ./wrdmttns portugues.dict $${F}; done;
