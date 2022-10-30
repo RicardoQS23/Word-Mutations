@@ -1,17 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "table.h"
 
 int count[100];
 
 
 /*******************
-** read_dictionary()   
+** count_words()   
 ** Função: lê o ficheiro do dicionário, constrói uma tabela em que temos 100 indices
 **         e em que guarda em cada indice o número de palavras do tamanho da palavra. 
 **         Devolve o número total de palavras.      
 ********************/
-void read_dictionary(FILE *InputFile1, int table_words[]){
+void count_words(FILE *InputFile1, int table_words[]){
   
   char word[100];
   int i = 0;
@@ -21,13 +19,9 @@ void read_dictionary(FILE *InputFile1, int table_words[]){
   }
 
   while(fscanf(InputFile1, "%s", word) != -1){
-
-      table_words[strlen(word)-1]+=1;
-   
+    table_words[strlen(word)-1]+=1;
   }
 }
-
-
 /*******************
 ** char ***array_3d()   
 ** Função: Alocamos o espaço necessário para colocarmos o 
@@ -66,8 +60,6 @@ char ***array_3d(int table_words[]){
     return array;
 
 }
-
-
 /*******************
 ** void table_fill()   
 ** Função: Lemos novamente o dicionário para retirarmos dele as palavras
@@ -83,18 +75,15 @@ void table_fill(char ***array, FILE *InputFile1, int table_words[]){
         count[i] = 0;
     }
 
-    while(fscanf(InputFile1, "%s", word) != -1){
+    while(fscanf(InputFile1, "%s", word) == 1){
         size = strlen(word)-1;
         if (table_words[size]!= 0){
             strcpy(array[size][count[size]], word);
             count[size]+=1;
         }
-            
     }
     fclose(InputFile1);
 }
-
-
 /*******************
 ** int binary_search()   
 ** Função: Esta função faz, através da procura binária, a procura da posição
@@ -123,7 +112,6 @@ int binary_search(char **array, char *word, int l, int r){
 
     return -1;
 }
-
 
 /*******************
 ** void partition()   
@@ -155,8 +143,6 @@ int partition(char **a, int l, int r){
     return i;
 
 }
-
-
 /*******************
 ** void quick_sort()   
 ** Função: Algortimo que ordena as tabelas    
@@ -169,11 +155,9 @@ void quicksort(char **a, int l, int r){
         quicksort(a, l, i-1);
         quicksort(a, i+1, r);
 }
-
-
 /*******************
 ** void free_everything()   
-** Função: Esta função    
+** Função: Esta função liberta a memoria alocada dinamicamente   
 ********************/
 void free_everything(char ***array, int table_words[], char *OutputFilename){
 
@@ -189,13 +173,4 @@ void free_everything(char ***array, int table_words[], char *OutputFilename){
 
     free(array);
     free(OutputFilename);
-}
-//////////////////////////////////////77
-void print_dict(char ***array, int table_words[]){
-    int i,j;
-    for(i=0; i<100;i++){
-        printf("***Palavras de tamanho %d***\n",i+1);
-        for(j=0;j<table_words[i];j++)
-            printf("%s\n",array[i][j]);
-    }
 }
