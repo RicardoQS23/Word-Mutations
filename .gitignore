@@ -15,3 +15,10 @@ ROAP/
 Ficheiros_Auxiliares/
 README.md
 .vscode/
+*.zip
+*.json
+*.o
+*.pals
+*.stats
+*.dict
+wrdmttns

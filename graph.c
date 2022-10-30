@@ -226,9 +226,9 @@ void search_for_best_route(char **words_array, char *init, char *end, FILE *fp_o
         return;
     }
     write_output_final(fp_out, end_idx, st, graph, words_array);
-    free_graph(graph);
     free(wt);
     free(st);
+    free_graph(graph);
 }
 
 void djikstra(Graph *G, int *wt, int *st, int start, int end)

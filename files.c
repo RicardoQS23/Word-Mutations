@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "files.h"
-
 
 char *Files_Ext(char *InputFilename1, char *InputFilename2){
 
@@ -14,7 +9,6 @@ char *Files_Ext(char *InputFilename1, char *InputFilename2){
         exit(0);
   }
 
-
   if ((strcmp(InputExtension2, validation2) != 0)){   /* Checks the extension of problems file */
         exit(0);
   }
@@ -24,7 +18,6 @@ char *Files_Ext(char *InputFilename1, char *InputFilename2){
     OutputFilename[strlen(OutputFilename) - strlen(InputExtension2)] = '\0';
     strcat(OutputFilename, OutputExtension);
   }
-
   return OutputFilename;
 }
 
@@ -32,9 +25,8 @@ char *Files_Ext(char *InputFilename1, char *InputFilename2){
 FILE *OpenFiles(char *filename, char *mode){
 
    FILE *fp;
-
+   
    fp = fopen(filename, mode);
-
    if (fp == NULL){
      exit(0);
    }
