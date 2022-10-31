@@ -228,10 +228,9 @@ void search_for_best_route(Graph **graph, char **words_array, char *init, char *
     wt = (int *)malloc(graph[size]->V * sizeof(int));
     if (wt == NULL)
         exit(0);
-
     djikstra(graph[size], wt, st, init_idx, end_idx, mut_max); 
 
-    if (st[end_idx] == -1)
+    if (st[end_idx] == -1)  //nao existe soluçao
     {
         fprintf(fp_out, "%s -1\n%s\n\n", words_array[init_idx], words_array[end_idx]);
         num_graphs[size]+=-1;
@@ -244,7 +243,7 @@ void search_for_best_route(Graph **graph, char **words_array, char *init, char *
     write_output_final(fp_out, end_idx, st, graph[size], words_array);
     free(wt);
     free(st);
-    num_graphs[size]+=-1;
+    num_graphs[size]-=1;
     if(num_graphs[size] == 0)   free_graph(graph[size]);
 }
 
@@ -266,16 +265,16 @@ void djikstra(Graph *G, int *wt, int *st, int start, int end, int mut_max)
     while (!PQempty(acervo))
     {
         v = PQdelmin(&acervo, wt); //POP
-        if(v==end){
+        if(v==end){ //termina o algoritmo assim que encontra o vertice destino
             free(acervo->queue);
             free(acervo);
             return;
-        }  
+        } 
 
         for (t = G->adj[v]; t != NULL; t = t->next)
         {
             if(t->cost > square(mut_max))   continue;
-            
+                
             w = t->idxB;
             if (wt[w] == INFINITY)
             {
@@ -294,7 +293,6 @@ void djikstra(Graph *G, int *wt, int *st, int start, int end, int mut_max)
             }
         }
     }
-
     free(acervo->queue);
     free(acervo);
 }

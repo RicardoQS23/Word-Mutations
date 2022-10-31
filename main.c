@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
         if(adj_data[size] < mut_numb)    adj_data[size] = mut_numb;  //atualiza o numero maximo de mutaçoes do grafo
     }
     rewind(inputFile2);  
-    FILE *outputFile = OpenFiles(outputFilename, "a");
+    FILE *outputFile = OpenFiles(outputFilename, "w");
     Graph **graph = NULL;
     graph = (Graph **)calloc(100, sizeof(Graph *));        
     if(graph == NULL)    
@@ -64,13 +64,14 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "Error when allocating memory!\n");
     exit(0);
     }
-    int opa = 1;
+    //int opa = 1;
     while(fscanf(inputFile2, "%s %s %d", init, end, &mut_numb) == 3){
-        printf("Linha #%d ****\n", opa);
+      //  printf("Linha #%d ****\n", opa);
+
         size = strlen(init)-1;
         char **words_array = dictionary[size];
         search_for_best_route(graph, words_array, init, end, outputFile, words_counted[size], mut_numb, num_graphs, adj_data);
-        opa++;
+        //opa++;
     }
     free(graph);
     free(num_graphs);

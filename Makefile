@@ -31,7 +31,7 @@ clean:
 valg:
 	time ${VALG} ./wrdmttns portugues.dict mix_01.pals
 r:
-	time ./wrdmttns portugues.dict mix_01.pals
+	./wrdmttns portugues.dict test.pals
 t:
 	for F in ${FILES}; do  ./wrdmttns portugues.dict $${F}; done;
 
