@@ -95,7 +95,6 @@ int binary_search(char **array, char *word, int l, int r){
 
         int compare = 0;
         int m = (l+r)/2;
-        
         compare = strcmp(word, array[m]);
        
         if (compare == 0){

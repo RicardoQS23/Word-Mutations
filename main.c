@@ -36,18 +36,46 @@ int main(int argc, char *argv[]) {
     if(end==NULL){
         printf("Couldn't allocate memory!\n");
         exit(0); 
-    }  
-   
-    int count = 1, size=0, mut_numb = 0;
-    FILE *outputFile = OpenFiles(outputFilename, "a");
-
-    while(fscanf(inputFile2, "%s %s %d", init, end, &mut_numb) ==3){
-        size = strlen(init)-1;
-        count+=1;
-        char **words_array = dictionary[size];
-        search_for_best_route(words_array, init, end, outputFile, words_counted[size], mut_numb);
     }
 
+    int *num_graphs = (int *)calloc(100, sizeof(int));
+    if(num_graphs==NULL){
+        printf("Couldn't allocate memory!\n");
+        exit(0); 
+    }
+
+    int *adj_data = (int *)calloc(100, sizeof(int));
+    if(adj_data==NULL){
+        printf("Couldn't allocate memory!\n");
+        exit(0); 
+    }
+    int size = 0, mut_numb = 0;
+    while(fscanf(inputFile2, "%s %s %d", init, end, &mut_numb) == 3){
+        size = strlen(init)-1;
+        num_graphs[size]+=1;
+        if(adj_data[size] < mut_numb)    adj_data[size] = mut_numb;  //atualiza o numero maximo de mutaçoes do grafo
+    }
+    rewind(inputFile2);  
+    FILE *outputFile = OpenFiles(outputFilename, "a");
+    
+    Graph **graph = NULL;
+    graph = (Graph **)calloc(100, sizeof(Graph *));        
+    if(graph == NULL)    
+    {
+    fprintf(stderr, "Error when allocating memory!\n");
+    exit(0);
+    }
+    int opa = 1;
+    while(fscanf(inputFile2, "%s %s %d", init, end, &mut_numb) == 3){
+        printf("Linha #%d ****\n", opa);
+        size = strlen(init)-1;
+        char **words_array = dictionary[size];
+        search_for_best_route(graph, words_array, init, end, outputFile, words_counted[size], mut_numb, num_graphs, adj_data);
+        opa++;
+    }
+    free(graph);
+    free(num_graphs);
+    free(adj_data);
     fclose(inputFile2);
     free(init);
     free(end);

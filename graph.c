@@ -175,63 +175,80 @@ int HigherPri(int a, int b)
         return 0;
 }
 
-void search_for_best_route(char **words_array, char *init, char *end, FILE *fp_out, int words_counted, int mut_max)
+void search_for_best_route(Graph **graph, char **words_array, char *init, char *end, FILE *fp_out, int words_counted, int mut_max, int *num_graphs, int *adj_data)
 {
-    if(strcmp(init,end)==0){
+    if(strcmp(init,end)==0){    //caso as palavras sejam a mesma
         fprintf(fp_out,"%s 0\n%s\n\n", init, end);
         return;
     }
-    int i=0 , count = 0;
+    int i = 0 , count = 0, size = strlen(init)-1;
 
     if(strcmp(init,end)!=0){
         for(i=0;i<=strlen(init);i++){
             if(init[i] != end[i])   count +=1;
         }
-        if(count == 1){
+        if(count == 1){ //caso em que as palavras diferem em apenas uma letra e nao é preciso criar um grafo
             fprintf(fp_out,"%s 1\n%s\n\n", init, end);
+            return;
+        }
+
+        if(mut_max == 0){   //caso em que o numero maximo de mutaçoes é nulo
+            fprintf(fp_out,"%s -1\n%s\n\n", init, end);
             return;
         } 
     }
+    if(mut_max < 0){    //caso em que o numero maximo de mutaçoes é negativo
+            fprintf(fp_out,"%s -1\n%s\n\n", init, end);
+            return;
+        } 
 
-    int init_idx = binary_search(words_array, init, 0, words_counted);
-    if(init_idx == -1){
+
+    int init_idx = binary_search(words_array, init, 0, words_counted-1);
+    if(init_idx == -1){ //caso em que nao encontra a palavra no dicionario
         fprintf(fp_out,"%s -1\n%s\n\n", init, end);
         return;
     }
 
-    int end_idx = binary_search(words_array, end, 0, words_counted);
-    if(end_idx == -1){
+    int end_idx = binary_search(words_array, end, 0, words_counted-1);
+    if(end_idx == -1){  //caso em que nao encontra a palavra no dicionario
         fprintf(fp_out,"%s -1\n%s\n\n", init, end);
         return;
     }
 
-    Graph *graph = init_Graph(words_counted);
-    graph->adj = create_adj_list(words_array, graph, mut_max, words_counted);
+    if(graph[size] == NULL){
+        graph[size] = init_Graph(words_counted);
+        graph[size]->adj = create_adj_list(words_array, graph[size], adj_data[size], words_counted);
+    }
+
     int *st = NULL, *wt = NULL;
-    
-    st = (int *)malloc(graph->V * sizeof(int));
+    st = (int *)malloc(graph[size]->V * sizeof(int));
     if (st == NULL)
         exit(0);
-    wt = (int *)malloc(graph->V * sizeof(int));
+
+    wt = (int *)malloc(graph[size]->V * sizeof(int));
     if (wt == NULL)
         exit(0);
 
-    djikstra(graph, wt, st, init_idx, end_idx); 
+    djikstra(graph[size], wt, st, init_idx, end_idx, mut_max); 
+
     if (st[end_idx] == -1)
     {
         fprintf(fp_out, "%s -1\n%s\n\n", words_array[init_idx], words_array[end_idx]);
-        free_graph(graph);
+        num_graphs[size]+=-1;
+        if(num_graphs[size] == 0)   free_graph(graph[size]);
         free(wt);
         free(st);
         return;
     }
-    write_output_final(fp_out, end_idx, st, graph, words_array);
+
+    write_output_final(fp_out, end_idx, st, graph[size], words_array);
     free(wt);
     free(st);
-    free_graph(graph);
+    num_graphs[size]+=-1;
+    if(num_graphs[size] == 0)   free_graph(graph[size]);
 }
 
-void djikstra(Graph *G, int *wt, int *st, int start, int end)
+void djikstra(Graph *G, int *wt, int *st, int start, int end, int mut_max)
 {
     int v, w;
     adjacency *t = NULL;
@@ -249,10 +266,16 @@ void djikstra(Graph *G, int *wt, int *st, int start, int end)
     while (!PQempty(acervo))
     {
         v = PQdelmin(&acervo, wt); //POP
-        //if(v==end)  break;
+        if(v==end){
+            free(acervo->queue);
+            free(acervo);
+            return;
+        }  
 
         for (t = G->adj[v]; t != NULL; t = t->next)
         {
+            if(t->cost > square(mut_max))   continue;
+            
             w = t->idxB;
             if (wt[w] == INFINITY)
             {

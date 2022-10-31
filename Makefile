@@ -1,6 +1,6 @@
 #M(m)akefile
 CC = gcc
-CFLAGS = -Wall -std=c99 -O3
+CFLAGS = -Wall -std=c99 -g
 
 
 #   Sources
