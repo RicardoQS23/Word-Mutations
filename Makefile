@@ -28,9 +28,10 @@ FILES = $(shell ls ..*.pals)
 VALG = valgrind --leak-check=full --show-leak-kinds=all
 clean:
 	rm -rf *.o
-
+valg:
+	time ${VALG} ./wrdmttns portugues.dict mix_01.pals
 r:
-	./wrdmttns portugues.dict mix_01.pals
+	time ./wrdmttns portugues.dict mix_01.pals
 t:
 	for F in ${FILES}; do  ./wrdmttns portugues.dict $${F}; done;
 

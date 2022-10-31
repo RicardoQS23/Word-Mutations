@@ -23,6 +23,7 @@ char *Files_Ext(char *InputFilename1, char *InputFilename2){
     strcpy(OutputFilename, InputFilename2);
     OutputFilename[strlen(OutputFilename) - strlen(InputExtension2)] = '\0';
     strcat(OutputFilename, OutputExtension);
+    OutputFilename[strlen(OutputFilename)] = '\0';
   }
 
   return OutputFilename;

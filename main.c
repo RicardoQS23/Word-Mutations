@@ -57,7 +57,6 @@ int main(int argc, char *argv[]) {
     }
     rewind(inputFile2);  
     FILE *outputFile = OpenFiles(outputFilename, "a");
-    
     Graph **graph = NULL;
     graph = (Graph **)calloc(100, sizeof(Graph *));        
     if(graph == NULL)    
