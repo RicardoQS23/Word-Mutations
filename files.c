@@ -1,8 +1,12 @@
 #include "files.h"
 
+/**
+ * char *Files_Ext()
+ * Função:  Cria o nome do ficheiro output já com a extensão .paths
+*/
 char *Files_Ext(char *InputFilename1, char *InputFilename2){
 
-  const char dot = '.', InputExtension1[] = ".dict", InputExtension2[] = ".pals", OutputExtension[] = ".stats";
+  const char dot = '.', InputExtension1[] = ".dict", InputExtension2[] = ".pals", OutputExtension[] = ".paths";
   char *validation1 = strrchr(InputFilename1, dot), *validation2 = strrchr(InputFilename2, dot), *OutputFilename = NULL;
 
    if ((strcmp(InputExtension1, validation1) != 0)){   /* Checks the extension of dictionary file */
@@ -21,7 +25,10 @@ char *Files_Ext(char *InputFilename1, char *InputFilename2){
   return OutputFilename;
 }
 
-
+/**
+ * FILE *OpenFiles()
+ * Função:  Abre o ficheiro com o nome indicado e com o respetivo modo de manipulaçao desse ficheiro
+*/
 FILE *OpenFiles(char *filename, char *mode){
 
    FILE *fp;

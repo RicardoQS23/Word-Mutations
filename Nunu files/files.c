@@ -7,7 +7,7 @@
 
 char *Files_Ext(char *InputFilename1, char *InputFilename2){
 
-  const char dot = '.', InputExtension1[] = ".dict", InputExtension2[] = ".pals", OutputExtension[] = ".stats";
+  const char dot = '.', InputExtension1[] = ".dict", InputExtension2[] = ".pals", OutputExtension[] = ".paths";
   char *validation1 = strrchr(InputFilename1, dot), *validation2 = strrchr(InputFilename2, dot), *OutputFilename = NULL;
 
    if ((strcmp(InputExtension1, validation1) != 0)){   /* Checks the extension of dictionary file */

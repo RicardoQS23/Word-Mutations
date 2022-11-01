@@ -24,7 +24,7 @@ typedef struct Graph
 
 typedef struct heap
 {
-    int free;
+    int free;   /* Numero de elementos no acervo */
     int size;
     int *queue;
 }heap;
@@ -36,7 +36,7 @@ adjacency *insertadjacency(adjacency *head, int sideB, int cost, int sideA);
 int square(int count);
 void freeLinkedList(adjacency *first);
 void free_graph(Graph *graph);
-void djikstra(Graph *G, int *wt, int *st, int start, int end, int mut_max);
+void dijkstra(Graph *G, int *wt, int *st, int start, int end, int mut_max);
 heap *PQinit(int Size);
 heap *update_queue(heap *acervo, int *wt, int w);
 int PQempty(heap *acervo);
@@ -44,7 +44,5 @@ int PQdelmin(heap **acervo, int *wt);
 heap *FixDown(heap *acervo,int *wt, int Idx, int N);
 heap *FixUp(heap *acervo, int *wt, int Idx);
 int HigherPri(int a, int b);
-void path_find(FILE *fp_out, int *st, Graph *graph, int *dist_final, int son, char **words_array);
-void write_output_final(FILE *fp_out, int final_room, int *st, Graph *graph, char **words_array);
-
+void print_path(FILE *fp_out, int *st, Graph *graph, int *dist_final, int son, char **words_array);
 #endif

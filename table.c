@@ -4,7 +4,7 @@ int count[100];
 
 
 /*******************
-** count_words()   
+** void count_words()   
 ** Função: lê o ficheiro do dicionário, constrói uma tabela em que temos 100 indices
 **         e em que guarda em cada indice o número de palavras do tamanho da palavra. 
 **         Devolve o número total de palavras.      
@@ -114,7 +114,7 @@ int binary_search(char **array, char *word, int l, int r){
 
 /*******************
 ** void partition()   
-**    
+** Função:  Esta função cria as diferentes partições do vetor inicial   
 ********************/
 int partition(char **a, int l, int r){
     int i, j;
@@ -144,7 +144,7 @@ int partition(char **a, int l, int r){
 }
 /*******************
 ** void quick_sort()   
-** Função: Algortimo que ordena as tabelas    
+** Função: Algortimo que ordena as tabelas alfabeticamente  
 ********************/
 void quicksort(char **a, int l, int r){
     int i = 0;
@@ -156,7 +156,7 @@ void quicksort(char **a, int l, int r){
 }
 /*******************
 ** void free_everything()   
-** Função: Esta função liberta a memoria alocada dinamicamente   
+** Função: Esta função liberta a restante memoria alocada dinamicamente   
 ********************/
 void free_everything(char ***array, int table_words[], char *OutputFilename){
 

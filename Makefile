@@ -1,6 +1,6 @@
 #M(m)akefile
 CC = gcc
-CFLAGS = -Wall -std=c99 -g
+CFLAGS = -Wall -std=c99 -O3
 
 
 #   Sources
@@ -31,7 +31,7 @@ clean:
 valg:
 	time ${VALG} ./wrdmttns portugues.dict mix_01.pals
 r:
-	./wrdmttns portugues.dict test.pals
+	./wrdmttns portugues.dict mix_01.pals
 t:
 	for F in ${FILES}; do  ./wrdmttns portugues.dict $${F}; done;
 
